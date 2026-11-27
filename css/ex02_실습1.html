@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        /* 선택자 {스타일속성:속성값;} 
+        * : 모든요소 선택
+        .클래스명 : 요소에 클래스 속성에 클래스이름을 넣어줌!
+                하나의 요소가 여러개의 클래스를 지정 할 수도 있다
+        #아이디
+
+        */
+
+        /* 
+        .클래스이름 {스타일속성:스타일값;}
+        .이 붙은 것은 클래스 속성의 값으로 사용!! */
+        .title{
+            /* 0 2 3 4 5 6 7 8 9 a b c d e f
+            색상을 16진수 숫자로 표현하는 방법
+             #000 #000000 : 검정색 
+             #fff #ffffff : 흰색
+            무채색을 표현할때 많이 사용!! 숫자가 커질수록 연해짐
+            */
+            color: #fff;
+            background-color: #333;
+            /* inline : 컨텐츠 만큼 자리를 차지
+                block : 한줄을 몽땅 차지
+            */
+            display: inline;
+            /* 상하 0px, 좌우 10px */
+            padding: 10px 10px;
+        }
+        ul{
+            list-style:none; /* 리스트 블릿을 제거*/
+        }
+
+        li{
+            color: blue;
+            font-size: 200%;
+            font-weight: bolder;
+            font-family: "Black Han Sans", sans-serif;
+        }
+
+        .black-han-sans-regular {
+            font-family: "Black Han Sans", sans-serif;
+            font-weight: 400;
+            font-style: italic;
+            
+        }
+
+        #title1{
+            /* display : 요소가 웹페이지에 어떻게 표시되고 배치될지 결정하는 핵심 속성 */
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            /* 글자 가운데 정렬 */
+            width: 500px;
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+        }
+        #abc{
+            background-color: red;
+        }
+
+        a{
+            /* 링크의 밑줄을 제거 하기위해서 많이 사용 */
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 한줄일때 중앙정렬 하는 방법은 높이와 라인높이 동일하게 맞춰준다! -->
+    <h1 id="title1">세로 중앙정렬</h1>
+    <hr>
+
+    <h1 class="title black-han-sans-regular">웹 기술 - 기본</h1>
+    <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>Javascript 기초</li>
+    </ul>
+
+
+    <a href="ex01_style.html">링크</a>
+</body>
+</html>

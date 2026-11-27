@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>레드향 주문하기 — 제주 프리미엄 스토어</title>
+  <style>
+    /* 애플 스타일 디자인 변수 */
+    :root {
+      --bg-color: #fbfbfd;
+      --card-bg: #ffffff;
+      --text-primary: #1d1d1f;
+      --text-secondary: #86868b;
+      --accent-blue: #0071e3;
+      --accent-blue-hover: #0077ed;
+      --border-color: #d2d2d7;
+      --nav-bg: rgba(251, 251, 253, 0.8);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 상단 반응형 내비게이션 (Glassmorphism) */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+
+    .nav-menu a:hover {
+      opacity: 1;
+    }
+
+    /* 모바일 햄버거 버튼 */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      background-color: var(--text-primary);
+      margin: 4px 0;
+      transition: 0.3s;
+    }
+
+    /* 메인 컨테이너 */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+
+    /* 히어로 타이틀 영역 */
+    .hero-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .hero-eyebrow {
+      color: #bf4800; /* 감귤/레드향 포인트 컬러 */
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    h1 {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .hero-subtitle {
+      font-size: 17px;
+      color: var(--text-secondary);
+    }
+
+    /* 상단 레드향 배너 이미지 */
+    .banner-wrapper {
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      margin-bottom: 48px;
+      background-color: #fff;
+    }
+
+    .banner-img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 배송 정보 카드 영역 */
+    .order-card {
+      background-color: var(--card-bg);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0f0f5;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    /* 애플 스타일 입력창 */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"] {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text-primary);
+      background-color: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15);
+    }
+
+    /* 읽기 전용(주문 상품) 스타일 */
+    input[readonly] {
+      background-color: #f5f5f7;
+      color: #515154;
+      font-weight: 600;
+      cursor: default;
+    }
+
+    input[readonly]:focus {
+      border-color: var(--border-color);
+      box-shadow: none;
+    }
+
+    .date-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .date-row input[type="date"] {
+      flex: 1;
+    }
+
+    .hint-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    /* 하단 버튼 영역 */
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    button.btn {
+      flex: 1;
+      height: 50px;
+      border-radius: 980px; /* 애플 특유의 캡슐(Pill) 버튼 */
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-blue);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-blue-hover);
+    }
+
+    .btn-secondary {
+      background-color: #f5f5f7;
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background-color: #e8e8ed;
+    }
+
+    /* 반응형 미디어 쿼리 (모바일 및 태블릿) */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 48px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(251, 251, 253, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 20px 24px;
+        gap: 18px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .nav-menu a {
+        font-size: 16px;
+      }
+
+      .container {
+        padding: 36px 16px 60px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .banner-img {
+        height: 220px;
+      }
+
+      .order-card {
+        padding: 28px 20px;
+      }
+
+      .date-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .btn-group {
+        flex-direction: column;
+      }
+    }
+
+    /* css 주석 */
+
+  </style>
+</head>
+<body>
+
+<!-- html 주석 -->
+
+  <!-- 상단 반응형 내비게이션 -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">Jeju Citrus</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#">스토어</a></li>
+        <li><a href="#">레드향 소개</a></li>
+        <li><a href="#">산지직송 안내</a></li>
+        <li><a href="#">주문조회</a></li>
+        <li><a href="#">고객지원</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- 메인 주문 영역 -->
+  <main class="container">
+    <div class="hero-header">
+      <span class="hero-eyebrow">제주 산지직송</span>
+      <h1>레드향 주문하기</h1>
+      <p class="hero-subtitle">입안 가득 퍼지는 진한 달콤함과 과즙을 집에서 만나보세요.</p>
+    </div>
+
+    <!-- 상단 이미지 (실제 레드향 사진 경로로 변경하세요) -->
+    <div class="banner-wrapper">
+      <img src="redhyang.jpg" alt="신선한 제주 레드향" class="banner-img">
+    </div>
+
+    <!-- 배송 정보 폼 -->
+    <form action="#" method="post" class="order-card">
+      <h2 class="section-title">배송 정보</h2>
+
+      <div class="form-group">
+        <label for="product">주문 상품</label>
+        <input type="text" id="product" value="상품용 3KG" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="name">이름</label>
+        <input type="text" id="name" placeholder="받으시는 분 성함" required>
+      </div>
+
+      <div class="form-group">
+        <label for="address">배송 주소</label>
+        <input type="text" id="address" placeholder="도로명 주소 및 상세 주소" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">이메일</label>
+        <input type="email" id="email" placeholder="example@icloud.com">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">연락처</label>
+        <input type="tel" id="phone" placeholder="하이픈 빼고 입력해 주세요 (01012345678)" required>
+      </div>
+
+      <div class="form-group">
+        <label for="delivery-date">배송 지정</label>
+        <div class="date-row">
+          <input type="date" id="delivery-date">
+          <span class="hint-text">주문일로부터 최소 3일 이후 선택 가능</span>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary">주문하기</button>
+        <button type="reset" class="btn btn-secondary">취소하기</button>
+      </div>
+    </form>
+  </main>
+
+  <!-- 모바일 메뉴 토글 스크립트 -->
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  </script>
+
+</body>
+</html>
